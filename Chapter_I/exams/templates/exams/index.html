@@ -1,0 +1,10 @@
+{% if students_list %}
+    <ul>
+    {% for students in students_list %}
+        <li>{{ students.name }} {{ students.surname}} {{students.age }}</li>
+    {% endfor %}
+    </ul>
+    <button name="sort-btn" id="sort-btn">sort</button>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}

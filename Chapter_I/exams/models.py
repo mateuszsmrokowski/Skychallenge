@@ -10,9 +10,13 @@ class Grade(models.Model):
     points = models.IntegerField(default=0)
     grade = models.IntegerField(default=0)
     exam = models.ForeignKey(Exams, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.student, self.points, self.grade
 
 class Students(models.Model):
-    Name = models.CharField(max_length=200)
-    Surname = models.CharField(max_length=200)
-    Age = models.IntegerField(default=0)
-    grade = models.ForeignKey(Grade, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    surname = models.CharField(max_length=200)
+    age = models.IntegerField(default=0)
+    def __str__(self):
+        return self.name, self.surname
+    #grade = models.ForeignKey(Grade, on_delete=models.CASCADE)
