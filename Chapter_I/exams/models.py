@@ -3,7 +3,7 @@ from django.db import models
 class Exams(models.Model):
     scope_of_knowledge = models.CharField(max_length=200)
     date = models.DateTimeField('Date of exam')
-
+    group = models.CharField(max_length=200)
 
 class Grade(models.Model):
     student = models.CharField(max_length=200)

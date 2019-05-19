@@ -1,4 +1,20 @@
-{% if students_list %}
+Edit exiting exams
+{% if exams_list %}
+    <ul>
+    {% for exams in exams_list %}
+        <li><a href="/polls/{{ exams.id }}/"> {{exams.date }} {{exams.group}}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No exams are available.</p>
+{% endif %}
+
+
+<form action='add_exams' method='GET'>
+<button type='submit'> Add new exam</button>
+</form>
+
+<!-- {% if students_list %}
     <ul>
     {% for students in students_list %}
         <li>{{ students.name }} {{ students.surname}} {{students.age }}</li>
@@ -8,3 +24,4 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+-->

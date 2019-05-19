@@ -1,0 +1,19 @@
+
+Exam name: <input type="text" name="exam_name"> </p>
+Scope of knowledge: <input type="text" name="exam_group"> </p>
+Date: <input type="date" name="exam_date"> </p>
+Name     Surname   Points  Grade
+<div id="students_table">
+{% if students_list %}
+    <ul>
+    {% for students in students_list %}
+        <li>{{students.name }} {{students.surname}} <input type="text" name="points" id={{students.id}}> <input type="number" name="grade"> </p></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No students are available.</p>
+{% endif %}
+</div>
+<form action='save_exam' method='GET'>
+<button type='submit'> Save</button>
+</form>
