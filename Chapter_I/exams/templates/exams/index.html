@@ -2,7 +2,7 @@ Edit exiting exams
 {% if exams_list %}
     <ul>
     {% for exams in exams_list %}
-        <li><a href="/exams/{{ exams.id }}/"> {{exams.name}}, {{exams.scope_of_knowledge }} , {{exams.date }} </li>
+        <li><a href="{{ exams.id }}/"> {{exams.name}}, {{exams.scope_of_knowledge }} , {{exams.date }} </li>
     {% endfor %}
     </ul>
 {% else %}
