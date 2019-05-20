@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Students, Exams, Grade
 from django.template import loader
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 
 def index(request):
     exams_list = Exams.objects.all()
@@ -10,7 +11,6 @@ def index(request):
     context = {
         'exams_list': exams_list
     }
-    #output = ', '.join([q.name for q in students_list])
     return HttpResponse(template.render(context, request))
 
 def add_exams(request):
@@ -37,7 +37,7 @@ def save_exam(request, *args, **kwargs):
         G = Grade(student_id = stud.id, points = points_list[i-1], grade = grades_list[i-1], exam = E)
         G.save()
         i += 1
-    return HttpResponse(request)
+    return redirect_root(request)
 
 def modify_exams(request, exam_id):
     students_list = []
@@ -75,5 +75,15 @@ def save_exam_edit(request, exam_id):
                 Grad.grade = grades_list[i]
                 Grad.save()
                 i += 1
+    return redirect_root(request)
 
-    return HttpResponse(request)
+def delete_exam(request, exam_id):
+    Exams.objects.get(pk=exam_id).delete()
+    exams_list = Exams.objects.all()
+
+    return redirect_root(request)
+
+
+
+def redirect_root(request):
+      return HttpResponseRedirect('/exams/')
