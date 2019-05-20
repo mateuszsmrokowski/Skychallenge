@@ -1,21 +1,49 @@
-<form action='modify_exam' method='GET'>
-  Exam name: {{exam_name}} </p>
-  Scope of knowledge: <input type="text" name="exam_sok" value={{exam_sok}}> </p>
-  Date: <input type="date" name="exam_date" value={{exam_date}}> </p>
-  Name     Surname   Points  Grade
-    {% if students_list %}
-        <ul>
-        {% for students in students_list %}
-            <li name={{ students.id }}> {{students.name }} {{students.surname}} <input type="text" name="points" value={{students.points}} > <input type="number" name="grade" value={{students.grade}}> </p></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No students are available.</p>
-    {% endif %}
+{% if user_type == "owner" %}
+  <form action='modify_exam' method='GET' >
+    Exam name: {{exam_name}} </p>
+    Scope of knowledge: <input type="text" name="exam_sok" value={{exam_sok}}> </p>
+    Date: <input type="date" name="exam_date" value={{exam_date}}> </p>
+    Name   Surname   Points  Grade
+      {% if students_list %}
+          <ul>
+          {% for students in students_list %}
+              <li name={{ students.id }}> {{students.name }} {{students.surname}} <input type="text" name="points" value={{students.points}} > <input type="number" name="grade" value={{students.grade}}> </p></li>
+          {% endfor %}
+          </ul>
+      {% else %}
+          <p>No students are available.</p>
+      {% endif %}
 
-  <button type='submit'> Save</button>
-</form>
+    <button type='submit'> Save</button>
 
-<form action='delete_exam' method='GET'>
-  <button type='delete exam'> Delete </button>
-</form>
+  </form>
+
+
+  <form action='delete_exam' method='GET'>
+    <button type='delete exam'> Delete </button>
+  </form>
+{% else %}
+  <form action='modify_exam' method='GET' >
+    Exam name: {{exam_name}} </p>
+    Scope of knowledge: {{exam_sok}} </p>
+    Date: {{exam_date}} </p>
+    Name   Surname   Points  Grade
+      {% if students_list %}
+          <ul>
+          {% for students in students_list %}
+              <li name={{ students.id }}> {{students.name }} {{students.surname}} {{students.points}} {{students.grade}} </p></li>
+          {% endfor %}
+          </ul>
+      {% else %}
+          <p>No students are available.</p>
+      {% endif %}
+
+  </form>
+
+{% endif %}
+
+
+
+
+
+<a href="{{request.META.HTTP_REFERER}}">Go back</a>

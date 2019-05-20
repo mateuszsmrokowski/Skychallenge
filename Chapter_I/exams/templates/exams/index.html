@@ -1,4 +1,7 @@
-Edit exiting exams
+Home page of exams sheet
+<div style="text-align: right;">
+		Current user: {{user_type}}
+	</div>
 {% if exams_list %}
     <ul>
     {% for exams in exams_list %}
@@ -9,7 +12,16 @@ Edit exiting exams
     <p>No exams are available.</p>
 {% endif %}
 
+{% if user_type == "owner" %}
+  <form action='add_exams' method='GET'>
+    <button type='submit'> Add new exam</button>
+  </form>
 
-<form action='add_exams' method='GET'>
-<button type='submit'> Add new exam</button>
-</form>
+  <form action='log_out' method='GET'>
+    <button type='submit'> Log out</button>
+  </form>
+  {% else %}
+  <form action='login_view' method='GET'>
+    <button type='submit'> Login</button>
+  </form>
+{% endif %}
