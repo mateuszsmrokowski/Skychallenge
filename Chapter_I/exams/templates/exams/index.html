@@ -3,11 +3,24 @@ Home page of exams sheet
 		Current user: {{user_type}}
 	</div>
 {% if exams_list %}
-    <ul>
-    {% for exams in exams_list %}
-        <li><a href="{{ exams.id }}/"> {{exams.name}}, {{exams.scope_of_knowledge }} , {{exams.date }} </li>
-    {% endfor %}
-    </ul>
+
+	<table class="sortable">
+		<tr>
+			<th>Exam name</th>
+			<th>Exam material</th>
+			<th>Exam date</th>
+			<th>Exam owner</th>
+		</tr>
+	{% for exams in exams_list %}
+		<tr>
+			<th>	<a href="{{ exams.id }}/"> {{exams.name}} </th>
+			<th>	 {{exams.scope_of_knowledge }} </th>
+			<th>	  {{exams.date }}  </th>
+			<th>	  {{exams.owner.name }}  </th>
+		</tr>
+	{% endfor %}
+  </table>
+
 {% else %}
     <p>No exams are available.</p>
 {% endif %}
@@ -25,3 +38,5 @@ Home page of exams sheet
     <button type='submit'> Login</button>
   </form>
 {% endif %}
+
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Students, Exams, Grade, Exams_owners
+from .models import Students, Exams, Grade, ExamsOwners
 from django.template import loader
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -9,6 +9,7 @@ def index(request):
     exams_list = Exams.objects.all()
     template = loader.get_template('exams/index.html')
     user_type = request.session.get('user')
+
     if not user_type:
        request.session['user_id'] = -1
        request.session['user'] = 'normal'
@@ -36,8 +37,8 @@ def save_exam(request, *args, **kwargs):
     exam_date = request.GET.get('exam_date')
     points_list = request.GET.getlist('points')
     grades_list = request.GET.getlist('grade')
-    Owner = Exams_owners.objects.get(pk=request.session['user_id'])
-    E = Exams(name=exam_name, scope_of_knowledge=sok, date=exam_date)
+    Owner = ExamsOwners.objects.get(pk=request.session['user_id'])
+    E = Exams(name=exam_name, scope_of_knowledge=sok, date=exam_date, owner=Owner)
     E.save()
     for stud in students_list:
         G = Grade(student_id = stud.id, points = points_list[i-1], grade = grades_list[i-1], exam = E)
@@ -53,17 +54,21 @@ def modify_exams(request, exam_id):
     for i in grade_list:
         Stud = Students.objects.get(pk=i.student_id)
         students_list.append({"name": Stud.name, "surname": Stud.surname , "points": i.points, "grade": i.grade, "id": Stud.id})
-    context = {
-        'exam_name': Exam.name,
-        'exam_sok': Exam.scope_of_knowledge,
-        'exam_date': Exam.date,
-        'students_list': students_list
-
-    }
     user_type = request.session.get('user')
     if not user_type:
        request.session['user_id'] = -1
        request.session['user'] = 'normal'
+    if user_type == 'owner' and not Exam.owner.id == request.session['user_id']:
+        user_type = "normal"
+
+    context = {
+        'exam_name': Exam.name,
+        'exam_sok': str(Exam.scope_of_knowledge),
+        'exam_date': Exam.date,
+        'students_list': students_list,
+        'user_type': user_type
+
+    }
     return HttpResponse(template.render(context, request))
 
 def save_exam_edit(request, exam_id):
@@ -90,7 +95,7 @@ def save_exam_edit(request, exam_id):
 def delete_exam(request, exam_id):
     Exams.objects.get(pk=exam_id).delete()
     exams_list = Exams.objects.all()
-    return redirect_root(request)
+    return home(request)
 
 
 def login_view(request):
@@ -100,11 +105,12 @@ def login_view(request):
 def login(request):
     username = request.GET.get('user_name')
     password = request.GET.get('user_password')
-    accounts = Exams_owners.objects.all()
+    accounts = ExamsOwners.objects.all()
     for acc in accounts:
         if acc.user_name == username and acc.user_password == password:
             request.session['user'] = 'owner'
             request.session['user_id'] = acc.id
+            print (acc.id)
 
     return home(request)
 
