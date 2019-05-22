@@ -1,9 +1,14 @@
 Home page of exams sheet
 <div style="text-align: right;">
-		Current user: {{user_type}}
+	{% if user_id != -1 %}
+	Current user: {{user_data}} </br>
+	{% endif %}
 	</div>
-{% if exams_list %}
+<div style="text-align: right;">
+ User type: {{user_type}}
+</div>
 
+{% if exams_list %}
 	<table class="sortable">
 		<tr>
 			<th>Exam name</th>
