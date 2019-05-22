@@ -16,6 +16,6 @@ Runing from Docker:
 
 About
 
-Admin/owner account:
+Admin/owner account:                                                                                                                      
 login: admin1, password admin1 - Antoni Flick                                                                                             
 login: admin2, password admin2 - Gregory Marvel
