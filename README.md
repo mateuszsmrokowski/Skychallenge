@@ -1,5 +1,5 @@
 # Skychallenge
-Runing from Django:
+Runing from Django/virtual env:
 
 1. Go to Chapter_I Directory
 2. run Makefile.bat
