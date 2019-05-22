@@ -110,7 +110,6 @@ def login(request):
         if acc.user_name == username and acc.user_password == password:
             request.session['user'] = 'owner'
             request.session['user_id'] = acc.id
-            print (acc.id)
 
     return home(request)
 
