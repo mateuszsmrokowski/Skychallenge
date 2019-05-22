@@ -1,27 +1,42 @@
-Edit exiting exams
+Home page of exams sheet
+<div style="text-align: right;">
+		Current user: {{user_type}}
+	</div>
 {% if exams_list %}
-    <ul>
-    {% for exams in exams_list %}
-        <li><a href="/polls/{{ exams.id }}/"> {{exams.date }} {{exams.group}}</li>
-    {% endfor %}
-    </ul>
+
+	<table class="sortable">
+		<tr>
+			<th>Exam name</th>
+			<th>Exam material</th>
+			<th>Exam date</th>
+			<th>Exam owner</th>
+		</tr>
+	{% for exams in exams_list %}
+		<tr>
+			<th>	<a href="{{ exams.id }}/"> {{exams.name}} </th>
+			<th>	 {{exams.scope_of_knowledge }} </th>
+			<th>	  {{exams.date }}  </th>
+			<th>	  {{exams.owner.name }}  </th>
+		</tr>
+	{% endfor %}
+  </table>
+
 {% else %}
     <p>No exams are available.</p>
 {% endif %}
 
+{% if user_type == "owner" %}
+  <form action='add_exams' method='GET'>
+    <button type='submit'> Add new exam</button>
+  </form>
 
-<form action='add_exams' method='GET'>
-<button type='submit'> Add new exam</button>
-</form>
-
-<!-- {% if students_list %}
-    <ul>
-    {% for students in students_list %}
-        <li>{{ students.name }} {{ students.surname}} {{students.age }}</li>
-    {% endfor %}
-    </ul>
-    <button name="sort-btn" id="sort-btn">sort</button>
-{% else %}
-    <p>No polls are available.</p>
+  <form action='log_out' method='GET'>
+    <button type='submit'> Log out</button>
+  </form>
+  {% else %}
+  <form action='login_view' method='GET'>
+    <button type='submit'> Login</button>
+  </form>
 {% endif %}
--->
+
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
