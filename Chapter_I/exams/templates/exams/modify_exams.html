@@ -7,7 +7,7 @@
       {% if students_list %}
           <ul>
           {% for students in students_list %}
-              <li name={{ students.id }}> {{students.name }} {{students.surname}} <input type="text" name="points" value={{students.points}} > <input type="number" name="grade" value={{students.grade}}> </p></li>
+              <li name={{ students.id }}> {{students.name }} {{students.surname}} <input type="text" name="points" value={{students.points}} > <input type="number" name="grade" value={{students.grade}} step="0.5" min="1" max="5"> </p></li>
           {% endfor %}
           </ul>
       {% else %}
@@ -15,7 +15,6 @@
       {% endif %}
 
     <button type='submit'> Save</button>
-
   </form>
 
 

@@ -11,16 +11,17 @@ def index(request):
     template = loader.get_template('exams/index.html')
     user_type = request.session.get('user')
     user_id = request.session['user_id']
-    if user_id != -1:
-        user_data = users_list.get(pk=user_id).name + " " + users_list.get(pk=user_id).surname
-
     if not user_type:
        request.session['user_id'] = -1
        request.session['user'] = 'normal'
+    user_data = ''
+    if user_id != -1:
+        user_data = users_list.get(pk=user_id).name + " " + users_list.get(pk=user_id).surname
     context = {
         'exams_list': exams_list,
         'user_type': user_type,
-        'user_data': user_data
+        'user_data': user_data,
+        'user_id': user_id
     }
     return HttpResponse(template.render(context, request))
 
